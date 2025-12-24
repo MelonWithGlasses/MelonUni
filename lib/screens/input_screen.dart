@@ -154,7 +154,7 @@ class _InputScreenState extends State<InputScreen> {
       final profile = ApplicantProfile(
         ieltsScore: double.parse(_ieltsController.text),
         gpa: double.parse(_gpaController.text),
-        homeCountry: 'Unknown', // Simplified for now
+        homeCountry: 'Unknown',
         intendedMajor: _selectedMajor,
         budget: int.parse(_budgetController.text),
         preferredCountries: [], // Can add selector later
