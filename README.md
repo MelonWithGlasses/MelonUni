@@ -6,7 +6,7 @@ Instead of guessing "Will I get accepted?", get a clear analysis based on your s
 
 [![Flutter](https://img.shields.io/badge/Flutter-3.0+-02569B?logo=flutter)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/Dart-3.0+-0175C2?logo=dart)](https://dart.dev)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 
 ## 🎯 What it does
 
@@ -43,7 +43,7 @@ Enter your profile (IELTS, GPA, Budget) and MelonUni gives you:
 
 ## 📄 License
 
-MIT License.
+Apache 2.0 License.
 
 ---
 
