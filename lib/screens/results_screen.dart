@@ -5,6 +5,7 @@ import '../data/repository.dart';
 import '../logic/melon_score_calculator.dart';
 import '../widgets/university_card.dart';
 import 'details_screen.dart';
+import '../logic/openrouter_service.dart';
 
 class ResultsScreen extends StatelessWidget {
   final ApplicantProfile profile;
@@ -31,6 +32,13 @@ class ResultsScreen extends StatelessWidget {
           onPressed: () => Navigator.pop(context),
         ),
       ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () => _showGeneralAdvice(context, profile),
+        backgroundColor: const Color(0xFF2D3328),
+        foregroundColor: Colors.white,
+        icon: const Icon(Icons.auto_awesome),
+        label: const Text('AI Advisor'),
+      ),
       body: ListView.builder(
         padding: const EdgeInsets.all(16),
         itemCount: scoredUnis.length,
@@ -55,5 +63,50 @@ class ResultsScreen extends StatelessWidget {
         },
       ),
     );
+  }
+
+  Future<void> _showGeneralAdvice(BuildContext context, ApplicantProfile profile) async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (ctx) => const Center(child: CircularProgressIndicator()),
+    );
+
+    try {
+      final service = OpenRouterService();
+      final advice = await service.analyzeProfile(profile: profile);
+
+      if (context.mounted) {
+        Navigator.pop(context); // Close loader
+        showDialog(
+          context: context,
+          builder: (ctx) => AlertDialog(
+            title: const Row(
+              children: [
+                Icon(Icons.auto_awesome, color: Color(0xFF9AAB89)),
+                SizedBox(width: 8),
+                Text('Melon Advisor'),
+              ],
+            ),
+            content: SingleChildScrollView(
+              child: Text(advice),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(ctx),
+                child: const Text('Thanks'),
+              ),
+            ],
+          ),
+        );
+      }
+    } catch (e) {
+      if (context.mounted) {
+        Navigator.pop(context);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error: $e')),
+        );
+      }
+    }
   }
 }

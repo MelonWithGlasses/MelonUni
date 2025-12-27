@@ -22,12 +22,14 @@ class UniversityCard extends StatelessWidget {
 
     return Card(
       margin: const EdgeInsets.only(bottom: 16),
-      elevation: 0,
+
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(20),
         side: BorderSide(color: Colors.grey.withValues(alpha: 0.1)),
       ),
       color: Colors.white,
+      shadowColor: Colors.black.withValues(alpha: 0.05),
+      elevation: 2,
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(16),
@@ -64,9 +66,11 @@ class UniversityCard extends StatelessWidget {
                       university.name,
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 16,
+                        fontSize: 17,
                         color: Color(0xFF2D3328),
+                        letterSpacing: -0.5,
                       ),
+
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),

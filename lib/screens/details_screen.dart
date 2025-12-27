@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../models/university.dart';
 import '../models/applicant_profile.dart';
 import '../logic/melon_score_calculator.dart';
+import '../logic/openrouter_service.dart';
 
 class DetailsScreen extends StatelessWidget {
   final University university;
@@ -122,6 +123,23 @@ class DetailsScreen extends StatelessWidget {
               const SizedBox(height: 32),
             ],
 
+
+
+            // AI Advisor Button
+            Center(
+              child: ElevatedButton.icon(
+                onPressed: () => _showAIAdvice(context),
+                icon: const Icon(Icons.auto_awesome),
+                label: const Text('Ask AI Advisor'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF2D3328),
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                ),
+              ),
+            ),
+            const SizedBox(height: 32),
+
             // Details
             const Text(
               'University Details',
@@ -220,6 +238,54 @@ class DetailsScreen extends StatelessWidget {
         return Colors.red;
       default:
         return Colors.grey;
+    }
+  }
+
+  Future<void> _showAIAdvice(BuildContext context) async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (ctx) => const Center(child: CircularProgressIndicator()),
+    );
+
+    try {
+      final service = OpenRouterService();
+      final advice = await service.analyzeProfile(
+        profile: profile,
+        university: university,
+      );
+
+      if (context.mounted) {
+        Navigator.pop(context); // Close loader
+        showDialog(
+          context: context,
+          builder: (ctx) => AlertDialog(
+            title: const Row(
+              children: [
+                Icon(Icons.auto_awesome, color: Color(0xFF9AAB89)),
+                SizedBox(width: 8),
+                Text('AI Advisor says:'),
+              ],
+            ),
+            content: SingleChildScrollView(
+              child: Text(advice),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(ctx),
+                child: const Text('Thanks'),
+              ),
+            ],
+          ),
+        );
+      }
+    } catch (e) {
+      if (context.mounted) {
+        Navigator.pop(context);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to get advice: $e')),
+        );
+      }
     }
   }
 }

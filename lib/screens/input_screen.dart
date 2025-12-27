@@ -57,10 +57,16 @@ class _InputScreenState extends State<InputScreen> {
                 _buildLabel('IELTS Score'),
                 TextFormField(
                   controller: _ieltsController,
-                  keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
+                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                  decoration: InputDecoration(
                     hintText: 'e.g. 7.0',
-                    prefixIcon: Icon(Icons.language),
+                    prefixIcon: const Icon(Icons.language),
+                    filled: true,
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      borderSide: BorderSide.none,
+                    ),
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) return 'Please enter score';
@@ -75,10 +81,16 @@ class _InputScreenState extends State<InputScreen> {
                 _buildLabel('GPA (4.0 Scale)'),
                 TextFormField(
                   controller: _gpaController,
-                  keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
+                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                  decoration: InputDecoration(
                     hintText: 'e.g. 3.5',
-                    prefixIcon: Icon(Icons.grade),
+                    prefixIcon: const Icon(Icons.grade),
+                    filled: true,
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      borderSide: BorderSide.none,
+                    ),
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) return 'Please enter GPA';
@@ -94,9 +106,15 @@ class _InputScreenState extends State<InputScreen> {
                 TextFormField(
                   controller: _budgetController,
                   keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     hintText: 'e.g. 5000',
-                    prefixIcon: Icon(Icons.attach_money),
+                    prefixIcon: const Icon(Icons.attach_money),
+                    filled: true,
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      borderSide: BorderSide.none,
+                    ),
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) return 'Please enter budget';
@@ -123,10 +141,16 @@ class _InputScreenState extends State<InputScreen> {
                     minimumSize: const Size(double.infinity, 56),
                   ),
                   child: const Text(
-                    'Calculate Chances',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    'Start My Journey',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 0.5,
+                    ),
                   ),
                 ),
+                const SizedBox(height: 24),
+
               ],
             ),
           ),
